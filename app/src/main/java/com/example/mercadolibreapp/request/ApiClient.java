@@ -5,6 +5,8 @@ import android.util.Log;
 
 import com.example.mercadolibreapp.model.Categoria;
 import com.example.mercadolibreapp.model.DetalleCategoria;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
@@ -21,12 +23,14 @@ public class ApiClient {
 
     public static MyApiInterface getMyApiClient(){
 
+        Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit=new Retrofit.Builder()
                 .baseUrl(PATH)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
-        Log.d("mensaje",retrofit.baseUrl().toString());
+
         myApiInteface=retrofit.create(MyApiInterface.class);
+        Log.d("salida",retrofit.baseUrl().toString());
         return myApiInteface;
     }
 
